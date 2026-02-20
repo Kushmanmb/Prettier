@@ -13,20 +13,37 @@ const rulesetName = process.argv[3];
 function listRulesets() {
   console.log('\nAvailable Prettier Rulesets:\n');
   
+  if (!fs.existsSync(RULESETS_DIR)) {
+    console.error('Error: Rulesets directory not found.');
+    console.log('Expected directory at:', RULESETS_DIR);
+    process.exit(1);
+  }
+  
   const files = fs.readdirSync(RULESETS_DIR)
     .filter(file => file.endsWith('.json'));
+  
+  if (files.length === 0) {
+    console.log('No rulesets found in', RULESETS_DIR);
+    return;
+  }
   
   files.forEach(file => {
     const name = path.basename(file, '.json');
     const rulesetPath = path.join(RULESETS_DIR, file);
-    const ruleset = JSON.parse(fs.readFileSync(rulesetPath, 'utf8'));
     
-    console.log(`  ${name}`);
-    console.log(`    Print Width: ${ruleset.printWidth}`);
-    console.log(`    Tab Width: ${ruleset.tabWidth}`);
-    console.log(`    Semicolons: ${ruleset.semi ? 'Required' : 'Not required'}`);
-    console.log(`    Quotes: ${ruleset.singleQuote ? 'Single' : 'Double'}`);
-    console.log('');
+    try {
+      const ruleset = JSON.parse(fs.readFileSync(rulesetPath, 'utf8'));
+      
+      console.log(`  ${name}`);
+      console.log(`    Print Width: ${ruleset.printWidth}`);
+      console.log(`    Tab Width: ${ruleset.tabWidth}`);
+      console.log(`    Semicolons: ${ruleset.semi ? 'Required' : 'Not required'}`);
+      console.log(`    Quotes: ${ruleset.singleQuote ? 'Single' : 'Double'}`);
+      console.log('');
+    } catch (error) {
+      console.error(`  Error reading ${name}: Invalid JSON format`);
+      console.log('');
+    }
   });
 }
 
@@ -66,6 +83,12 @@ function createRuleset(name) {
     process.exit(1);
   }
   
+  if (!fs.existsSync(RULESETS_DIR)) {
+    console.error('Error: Rulesets directory not found.');
+    console.log('Expected directory at:', RULESETS_DIR);
+    process.exit(1);
+  }
+  
   const rulesetPath = path.join(RULESETS_DIR, `${name}.json`);
   
   if (fs.existsSync(rulesetPath)) {
@@ -78,7 +101,13 @@ function createRuleset(name) {
   if (fs.existsSync(PRETTIER_RC)) {
     template = fs.readFileSync(PRETTIER_RC, 'utf8');
   } else {
-    template = fs.readFileSync(path.join(RULESETS_DIR, 'default.json'), 'utf8');
+    const defaultPath = path.join(RULESETS_DIR, 'default.json');
+    if (!fs.existsSync(defaultPath)) {
+      console.error('Error: Default ruleset not found and no .prettierrc exists.');
+      console.log('Please create a .prettierrc file first or ensure default.json exists.');
+      process.exit(1);
+    }
+    template = fs.readFileSync(defaultPath, 'utf8');
   }
   
   fs.writeFileSync(rulesetPath, template);
