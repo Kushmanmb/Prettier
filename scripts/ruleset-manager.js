@@ -52,18 +52,40 @@ function applyRuleset(name) {
   
   if (!fs.existsSync(rulesetPath)) {
     console.error(`Error: Ruleset '${name}' not found.`);
-    console.log('\nAvailable rulesets:');
-    const files = fs.readdirSync(RULESETS_DIR)
-      .filter(file => file.endsWith('.json'))
-      .map(file => `  - ${path.basename(file, '.json')}`);
-    console.log(files.join('\n'));
+    
+    if (fs.existsSync(RULESETS_DIR)) {
+      console.log('\nAvailable rulesets:');
+      const files = fs.readdirSync(RULESETS_DIR)
+        .filter(file => file.endsWith('.json'))
+        .map(file => `  - ${path.basename(file, '.json')}`);
+      if (files.length > 0) {
+        console.log(files.join('\n'));
+      } else {
+        console.log('  (no rulesets found)');
+      }
+    } else {
+      console.log('Rulesets directory not found at:', RULESETS_DIR);
+    }
     process.exit(1);
   }
   
-  const ruleset = fs.readFileSync(rulesetPath, 'utf8');
-  fs.writeFileSync(PRETTIER_RC, ruleset);
-  
-  console.log(`✓ Applied '${name}' ruleset to .prettierrc`);
+  // Validate JSON before applying
+  try {
+    const rulesetContent = fs.readFileSync(rulesetPath, 'utf8');
+    const parsedRuleset = JSON.parse(rulesetContent);
+    
+    // Write the validated content
+    fs.writeFileSync(PRETTIER_RC, JSON.stringify(parsedRuleset, null, 2));
+    console.log(`✓ Applied '${name}' ruleset to .prettierrc`);
+  } catch (error) {
+    console.error(`Error: Failed to apply ruleset '${name}'`);
+    if (error instanceof SyntaxError) {
+      console.error('The ruleset file contains invalid JSON.');
+    } else {
+      console.error(error.message);
+    }
+    process.exit(1);
+  }
 }
 
 function showCurrentRuleset() {
