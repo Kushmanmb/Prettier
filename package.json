@@ -1,0 +1,25 @@
+{
+  "name": "prettier",
+  "version": "1.0.0",
+  "description": "Prettier configuration with ruleset management",
+  "main": "index.js",
+  "scripts": {
+    "ruleset:list": "node scripts/ruleset-manager.js list",
+    "ruleset:apply": "node scripts/ruleset-manager.js apply",
+    "ruleset:current": "node scripts/ruleset-manager.js current",
+    "ruleset:create": "node scripts/ruleset-manager.js create",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Kushmanmb/Prettier.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/Kushmanmb/Prettier/issues"
+  },
+  "homepage": "https://github.com/Kushmanmb/Prettier#readme"
+}
