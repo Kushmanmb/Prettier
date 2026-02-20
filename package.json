@@ -6,6 +6,13 @@
   "scripts": {
     "format": "prettier --write .",
     "check": "prettier --check ."
+  "name": "prettier",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
   },
   "repository": {
     "type": "git",
@@ -18,11 +25,21 @@
   ],
   "author": "",
   "license": "ISC",
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
   "bugs": {
     "url": "https://github.com/Kushmanmb/Prettier/issues"
   },
   "homepage": "https://github.com/Kushmanmb/Prettier#readme",
   "devDependencies": {
     "prettier": "^3.0.0"
+    "husky": "^9.1.7",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.8.1"
+  },
+  "lint-staged": {
+    "*": "prettier --write --ignore-unknown"
   }
 }
