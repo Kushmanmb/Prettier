@@ -1,4 +1,11 @@
 {
+  "name": "prettier-config",
+  "version": "1.0.0",
+  "description": "Prettier configuration",
+  "main": ".prettierrc",
+  "scripts": {
+    "format": "prettier --write .",
+    "check": "prettier --check ."
   "name": "prettier",
   "version": "1.0.0",
   "description": "",
@@ -11,6 +18,13 @@
     "type": "git",
     "url": "git+https://github.com/Kushmanmb/Prettier.git"
   },
+  "keywords": [
+    "prettier",
+    "formatting",
+    "code-style"
+  ],
+  "author": "",
+  "license": "ISC",
   "keywords": [],
   "author": "",
   "license": "MIT",
@@ -20,6 +34,7 @@
   },
   "homepage": "https://github.com/Kushmanmb/Prettier#readme",
   "devDependencies": {
+    "prettier": "^3.0.0"
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1"
