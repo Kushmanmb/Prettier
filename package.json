@@ -1,16 +1,11 @@
 {
-  "name": "prettier-config",
-  "version": "1.0.0",
-  "description": "Prettier configuration",
-  "main": ".prettierrc",
-  "scripts": {
-    "format": "prettier --write .",
-    "check": "prettier --check ."
   "name": "prettier",
   "version": "1.0.0",
-  "description": "",
+  "description": "Prettier configuration with examples",
   "main": "index.js",
   "scripts": {
+    "format": "prettier --write .",
+    "check": "prettier --check .",
     "test": "echo \"Error: no test specified\" && exit 1",
     "prepare": "husky"
   },
@@ -24,9 +19,6 @@
     "code-style"
   ],
   "author": "",
-  "license": "ISC",
-  "keywords": [],
-  "author": "",
   "license": "MIT",
   "type": "commonjs",
   "bugs": {
@@ -34,7 +26,6 @@
   },
   "homepage": "https://github.com/Kushmanmb/Prettier#readme",
   "devDependencies": {
-    "prettier": "^3.0.0"
     "husky": "^9.1.7",
     "lint-staged": "^16.2.7",
     "prettier": "^3.8.1"

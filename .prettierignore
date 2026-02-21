@@ -2,3 +2,8 @@
 build
 coverage
 node_modules
+
+# Ignore C++ files (not formatted by Prettier)
+*.cpp
+*.h
+*.hpp
